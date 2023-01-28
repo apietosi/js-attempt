@@ -1,0 +1,19 @@
+// Initialize the Reaper API
+var R = new Reaper();
+
+// Get the selected sample
+var sample = R.getSelectedMediaItem();
+
+// Get the selected area
+var startTime = R.getCursorPosition();
+var endTime = R.getSelectedRegionEnd();
+
+// Quantize the selected area by 4, 16, or 32
+var quantizeAmount = 4; // You can change this to 16 or 32 if needed
+var quantizedStartTime = R.quantize(startTime, quantizeAmount);
+var quantizedEndTime = R.quantize(endTime, quantizeAmount);
+
+// Fill the selected area with the selected sample
+for (var time = quantizedStartTime; time < quantizedEndTime; time += sample.length) {
+  R.insertMediaItem(time, sample);
+}
